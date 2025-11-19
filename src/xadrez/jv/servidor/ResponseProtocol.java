@@ -1,26 +1,30 @@
 package xadrez.jv.servidor;
 
 import xadrez.jv.backend.Peca;
+import xadrez.jv.backend.Tabuleiro;
 
 public class ResponseProtocol extends Protocol {
-	private Peca p;
-	private String statusCode;
-	// Para respostas de explicacao
+	/**
+	 * Para respostas Explicavel
+	 */
 	private int[] destinosSimulacao;
-	private String eMessage;
-	// Para respostas de simulacao
+	private String mensagem;
+	private int pecaId;
+
+	/**
+	 * Para respostas simulação
+	 */
+	private Tabuleiro tabuleiro;
 
 	public ResponseProtocol() {
 	}
-
-	public Peca getP() {
-		return p;
-	}
-
-	public void setP(Peca p) {
-		this.p = p;
-	}
-
+	
+	/**
+	 * 
+	 * GETTERS E SETTERS
+	 * 
+	 */
+	
 	public int[] getDestinosSimulacao() {
 		return destinosSimulacao;
 	}
@@ -29,20 +33,27 @@ public class ResponseProtocol extends Protocol {
 		this.destinosSimulacao = destinosSimulacao;
 	}
 
-	public String geteMessage() {
-		return eMessage;
+	public String getMensagem() {
+		return mensagem;
 	}
 
-	public void seteMessage(String eMessage) {
-		this.eMessage = eMessage;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 
-	public String getStatusCode() {
-		return statusCode;
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
 	}
 
-	public void setStatusCode(String statusCode) {
-		this.statusCode = statusCode;
+	public void setTabuleiro(Tabuleiro tabuleiro) {
+		this.tabuleiro = tabuleiro;
 	}
 
+	public int getPecaId() {
+		return pecaId;
+	}
+
+	public void setPecaId(int pecaId) {
+		this.pecaId = pecaId;
+	}
 }

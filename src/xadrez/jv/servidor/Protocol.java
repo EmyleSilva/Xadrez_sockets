@@ -1,22 +1,29 @@
 package xadrez.jv.servidor;
 
-import xadrez.jv.backend.Peca;
+import xadrez.jv.servidor.enuns.Status;
+import xadrez.jv.servidor.enuns.Tipo;
 
 public class Protocol {
-	protected String type;
+	protected Tipo tipo;
+	protected Status status;
 
-	public Protocol() {}
-
-	public Protocol(String type) {
-		this.type = type;
+	public Protocol() {
+		
 	}
 
-	public String getType() {
-		return type;
+	public Tipo getTipo() {
+		return tipo;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }

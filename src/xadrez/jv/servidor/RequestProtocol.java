@@ -1,44 +1,31 @@
 package xadrez.jv.servidor;
 
-import xadrez.jv.backend.Peca;
+import xadrez.jv.backend.Tabuleiro;
 
 public class RequestProtocol extends Protocol {
-	// Para requisicao de explicacao
+	/**
+	 * Para requests de Explicação e Simulação
+	 */
 	private String peca;
-	// Para requisica de movimentacao
-	private int posicaoDestinoX;
-	private int posicaoDestinoY;
-	private Peca movPeca;
+	/**
+	 * Para requests de Simulação (Posicionar no tabuleiro)
+	 */
+	private int cor;
+	private int posX;
+	private int posY;
+	/**
+	 * Para requests de Simulação (Movimentar peça)
+	 */
+	private int destinoX;
+	private int destinoY;
 
-	// Construtor para requests de modo Explicavel
-	public RequestProtocol(String type, String peca) {
-		super(type);
-		this.peca = peca;
-	}
+	private Tabuleiro t;
 
-	// Construtor para requests de modo Simulação
-	public RequestProtocol(String type, Peca peca, int posX, int posY) {
-		super(type);
-		this.movPeca = peca;
-		this.posicaoDestinoX = posX;
-		this.posicaoDestinoY = posY;
-	}
-
-	public int getPosicaoDestinoX() {
-		return posicaoDestinoX;
-	}
-
-	public void setPosicaoDestinoX(int posicaoDestinoX) {
-		this.posicaoDestinoX = posicaoDestinoX;
-	}
-
-	public int getPosicaoDestinoY() {
-		return posicaoDestinoY;
-	}
-
-	public void setPosicaoDestinoY(int posicaoDestinoY) {
-		this.posicaoDestinoY = posicaoDestinoY;
-	}
+	/**
+	 * 
+	 * GETTERS E SETTERS
+	 * 
+	 */
 
 	public String getPeca() {
 		return peca;
@@ -48,12 +35,52 @@ public class RequestProtocol extends Protocol {
 		this.peca = peca;
 	}
 
-	public Peca getMovPeca() {
-		return movPeca;
+	public int getCor() {
+		return cor;
 	}
 
-	public void setMovPeca(Peca movPeca) {
-		this.movPeca = movPeca;
+	public void setCor(int cor) {
+		this.cor = cor;
+	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public int getDestinoX() {
+		return destinoX;
+	}
+
+	public void setDestinoX(int destinoX) {
+		this.destinoX = destinoX;
+	}
+
+	public int getDestinoY() {
+		return destinoY;
+	}
+
+	public void setDestinoY(int destinoY) {
+		this.destinoY = destinoY;
+	}
+
+	public Tabuleiro getT() {
+		return t;
+	}
+
+	public void setT(Tabuleiro t) {
+		this.t = t;
 	}
 
 }
