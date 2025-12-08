@@ -1,24 +1,32 @@
 package xadrez.jv.servidor;
 
+import com.google.gson.annotations.Expose;
 import xadrez.jv.backend.Tabuleiro;
 
 public class RequestProtocol extends Protocol {
 	/**
 	 * Para requests de Explicação e Simulação
 	 */
+	@Expose(serialize = true, deserialize = true)
 	private String peca;
 	/**
 	 * Para requests de Simulação (Posicionar no tabuleiro)
 	 */
-	private int cor;
-	private int posX;
-	private int posY;
+	@Expose(serialize = true, deserialize = true)
+	private Integer cor; // ← Mude de int para Integer (aceita null)
+	@Expose(serialize = true, deserialize = true)
+	private Integer posX;
+	@Expose(serialize = true, deserialize = true)
+	private Integer posY;
 	/**
 	 * Para requests de Simulação (Movimentar peça)
 	 */
-	private int destinoX;
-	private int destinoY;
+	@Expose(serialize = true, deserialize = true)
+	private Integer destinoX;
+	@Expose(serialize = true, deserialize = true)
+	private Integer destinoY;
 
+	@Expose(serialize = true, deserialize = true)
 	private Tabuleiro t;
 
 	/**
@@ -35,43 +43,43 @@ public class RequestProtocol extends Protocol {
 		this.peca = peca;
 	}
 
-	public int getCor() {
+	public Integer getCor() {
 		return cor;
 	}
 
-	public void setCor(int cor) {
+	public void setCor(Integer cor) {
 		this.cor = cor;
 	}
 
-	public int getPosX() {
+	public Integer getPosX() {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(Integer posX) {
 		this.posX = posX;
 	}
 
-	public int getPosY() {
+	public Integer getPosY() {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
+	public void setPosY(Integer posY) {
 		this.posY = posY;
 	}
 
-	public int getDestinoX() {
+	public Integer getDestinoX() {
 		return destinoX;
 	}
 
-	public void setDestinoX(int destinoX) {
+	public void setDestinoX(Integer destinoX) {
 		this.destinoX = destinoX;
 	}
 
-	public int getDestinoY() {
+	public Integer getDestinoY() {
 		return destinoY;
 	}
 
-	public void setDestinoY(int destinoY) {
+	public void setDestinoY(Integer destinoY) {
 		this.destinoY = destinoY;
 	}
 

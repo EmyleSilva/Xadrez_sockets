@@ -1,5 +1,7 @@
 package xadrez.jv.servidor;
 
+import com.google.gson.annotations.Expose;
+
 import xadrez.jv.backend.Peca;
 import xadrez.jv.backend.Tabuleiro;
 
@@ -7,9 +9,14 @@ public class ResponseProtocol extends Protocol {
 	/**
 	 * Para respostas Explicavel
 	 */
-	private int[] destinosSimulacao;
+	@Expose
+	private Integer[] destinosSimulacao;
+	
+	@Expose
 	private String mensagem;
-	private int pecaId;
+
+	@Expose
+	private Integer pecaId;
 
 	/**
 	 * Para respostas simulação
@@ -25,11 +32,11 @@ public class ResponseProtocol extends Protocol {
 	 * 
 	 */
 	
-	public int[] getDestinosSimulacao() {
+	public Integer[] getDestinosSimulacao() {
 		return destinosSimulacao;
 	}
 
-	public void setDestinosSimulacao(int[] destinosSimulacao) {
+	public void setDestinosSimulacao(Integer[] destinosSimulacao) {
 		this.destinosSimulacao = destinosSimulacao;
 	}
 
