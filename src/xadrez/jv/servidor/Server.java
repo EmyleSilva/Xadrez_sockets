@@ -23,7 +23,7 @@ public class Server {
 
 	public void start() throws IOException {
 		this.server = new ServerSocket(PORT);
-		System.out.println("Servidor ouvindo na porta " + PORT + "...");
+		System.out.println("\n\n Servidor ouvindo na porta " + PORT + "...");
 		clientConnectionLoop();
 	}
 
@@ -31,7 +31,7 @@ public class Server {
 		while (true) {
 			// Cria o Socket local para comunicação com o cliente
 			Socket clientSocket = this.server.accept();
-			System.out.println("Cliente " + clientSocket.getInetAddress().getHostAddress());
+			System.out.println("Cliente conectado: " + clientSocket.getInetAddress().getHostAddress());
 
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -39,7 +39,7 @@ public class Server {
 
 				// Recebe a requisição no formato JSON
 				String jsonReceveid = in.readLine();
-				System.out.println("JSON recebido: " + jsonReceveid);
+				System.out.println("\n\nSolicitação recebida: " + jsonReceveid);
 
 				// Desserializa JSON para objeto do tipo Mensagem
 				RequestProtocol request = gson.fromJson(jsonReceveid, RequestProtocol.class);
@@ -48,6 +48,7 @@ public class Server {
 
 				// Serializa a resposta para JSON e envia para o cliente
 				String jsonResponse = gson.toJson(response);
+				System.out.println("\n\nResposta enviada: " + jsonResponse);
 				out.println(jsonResponse);
 
 				clientSocket.close();
@@ -87,37 +88,30 @@ public class Server {
 	public ResponseProtocol processGetExp(RequestProtocol request, ResponseProtocol response) {
 
 		String peca = request.getPeca();
-		Peca p;
-
+		Peca p = null;
 		response.setTipo(Tipo.POST_EXP);
+		response.setStatus(Status.OK);
 		
-		if (peca == "BISPO") {
-			int[] destinos = { 7, 7, 5, 5, 7, 3 };
+		if (peca.equalsIgnoreCase("BISPO")) {
+			Integer[] destinos = { 7, 7, 5, 5, 7, 3 };
 			p = new Bispo(0, 0, 1);
-
-			response.setPecaId(p.getId());
 			response.setDestinosSimulacao(destinos);
-			response.setMensagem(p.explicacao());
-		} else if (peca == "CAVALO") {
-			int[] destinos = { 1, 2, 3, 1, 5, 2 };
+		} else if (peca.equalsIgnoreCase("CAVALO")) {
+			Integer[] destinos = { 1, 2, 3, 1, 5, 2 };
 			p = new Cavalo(0, 0, 1);
-
-			response.setPecaId(p.getId());
 			response.setDestinosSimulacao(destinos);
-			response.setMensagem(p.explicacao());
-		} else if (peca == "TORRE") {
-			int[] destinos = { 5, 0, 3, 0, 3, 3 };
+		} else if (peca.equalsIgnoreCase("TORRE")) {
+			Integer[] destinos = { 5, 0, 3, 0, 3, 3 };
 			p = new Torre(0, 0, 1);
-
-			response.setPecaId(p.getId());
 			response.setDestinosSimulacao(destinos);
-			response.setMensagem(p.explicacao());
 		} else {
 			response.setStatus(Status.PECA_NULL);
+			response.setMensagem("Peça não encontrada");
 		}
 
-		response.setStatus(Status.OK);
-
+		if(p != null){
+			response.setMensagem(p.explicacao());
+		}
 		return response;
 	}
 
