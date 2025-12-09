@@ -1,4 +1,4 @@
-package xadrez.jv.servidor.enuns;
+package xadrez.jv.protocolo;
 
 public enum Tipo {
 	GET_EXP,

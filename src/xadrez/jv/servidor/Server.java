@@ -8,17 +8,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import xadrez.jv.backend.Bispo;
 import xadrez.jv.backend.Cavalo;
 import xadrez.jv.backend.Peca;
 import xadrez.jv.backend.Torre;
-import xadrez.jv.servidor.enuns.Status;
-import xadrez.jv.servidor.enuns.Tipo;
+import xadrez.jv.protocolo.PecaAdapter;
+import xadrez.jv.protocolo.RequestProtocol;
+import xadrez.jv.protocolo.ResponseProtocol;
+import xadrez.jv.protocolo.Status;
+import xadrez.jv.protocolo.Tipo;
 
 public class Server {
 	private static final int PORT = 8089;
-	private static final Gson gson = new Gson();
+	private static final Gson gson = new GsonBuilder().registerTypeAdapter(Peca.class, new PecaAdapter()).create();
 	private ServerSocket server;
 
 	public void start() throws IOException {
@@ -123,15 +127,15 @@ public class Server {
 
 		response.setTipo(Tipo.POST_PECA);
 
-		if (peca == "BISPO") {
+		if (peca.equalsIgnoreCase("BISPO")) {
 
 			p = new Bispo(0, 0, request.getCor());
 
-		} else if (peca == "CAVALO") {
+		} else if (peca.equalsIgnoreCase("CAVALO")) {
 
 			p = new Cavalo(0, 0, request.getCor());
 
-		} else if (peca == "TORRE") {
+		} else if (peca.equalsIgnoreCase("TORRE")) {
 
 			p = new Torre(0, 0, request.getCor());
 

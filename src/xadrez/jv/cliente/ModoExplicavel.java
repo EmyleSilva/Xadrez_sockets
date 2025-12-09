@@ -17,8 +17,10 @@ import xadrez.jv.backend.Cavalo;
 import xadrez.jv.backend.Peca;
 import xadrez.jv.backend.Tabuleiro;
 import xadrez.jv.backend.Torre;
+import xadrez.jv.protocolo.RequestProtocol;
+import xadrez.jv.protocolo.ResponseProtocol;
+import xadrez.jv.protocolo.Tipo;
 import xadrez.jv.servidor.*;
-import xadrez.jv.servidor.enuns.Tipo;
 
 public class ModoExplicavel extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;

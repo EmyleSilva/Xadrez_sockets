@@ -1,7 +1,4 @@
-package xadrez.jv.servidor;
-
-import xadrez.jv.servidor.enuns.Status;
-import xadrez.jv.servidor.enuns.Tipo;
+package xadrez.jv.protocolo;
 
 public class Protocol {
 	protected Tipo tipo;

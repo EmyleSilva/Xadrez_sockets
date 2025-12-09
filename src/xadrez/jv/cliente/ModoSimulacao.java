@@ -13,6 +13,10 @@ import xadrez.jv.backend.Cavalo;
 import xadrez.jv.backend.Peca;
 import xadrez.jv.backend.Tabuleiro;
 import xadrez.jv.backend.Torre;
+import xadrez.jv.protocolo.RequestProtocol;
+import xadrez.jv.protocolo.ResponseProtocol;
+import xadrez.jv.protocolo.Status;
+import xadrez.jv.protocolo.Tipo;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -277,31 +281,70 @@ public class ModoSimulacao extends javax.swing.JFrame {
      * para movimento de uma peça já posicionada no tabuleiro.
      * */
     private void cellClickHandler(int row, int col) {
-    	if (!controller) //Ação realizada quando é uma adição de nova peça
-    	{
-    		if (this.p != null) {
-    			this.p.setPosicaoOrigemX(row);
-    			this.p.setPosicaoOrigemY(col);
-    			t.setPeca(p);
-    			updateChessBoard();
-    			controller = true;  
-    		}else 
-    			JOptionPane.showMessageDialog(null, "Escolha uma peça no menu para adicionar\nno tabuleiro!", "ERRO", JOptionPane.ERROR_MESSAGE);
-    	}//Ação que será realizada quando é movimentação de uma peça já disponível no tabuleiro
-    	else {
-    		if (!canMakeMovement)
-    		{
-    			this.p = t.getMatrizPosicao(row, col);
-    			if (this.p == null)
-    				JOptionPane.showMessageDialog(null, "Selecione uma peça para realizar\num movimento!", "ERRO", JOptionPane.ERROR_MESSAGE);
-    			else canMakeMovement = true;
-    		}else if (canMakeMovement){
-    			if (!t.movimentarPeca(row, col, p.getId()))
-    				JOptionPane.showMessageDialog(null, "Movimento Inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-    			updateChessBoard();
-    			canMakeMovement = false;
-    		}
-    		
+    	if (!controller) { // ADICIONANDO UMA NOVA PEÇA
+    	    if (this.p != null) {
+    	        // 1. Prepara a requisição
+    	        RequestProtocol req = new RequestProtocol();
+    	        req.setTipo(Tipo.GET_PECA); // Sugestão: Renomeiem para ADICIONAR_PECA no Enum
+    	        
+    	        // Mapeia o nome da peça baseada na instância local (gambiarra necessária pois p é abstrato)
+    	        if(p instanceof Bispo) req.setPeca("BISPO");
+    	        else if(p instanceof Torre) req.setPeca("TORRE");
+    	        else if(p instanceof Cavalo) req.setPeca("CAVALO");
+    	        
+    	        req.setCor( (p.getCor().equals("Branco") ? 0 : 1) ); // 0=Branco, 1=Preto
+    	        req.setDestinoX(row); // Usa DestinoX/Y para passar a posição de origem (conforme seu Server.java)
+    	        req.setDestinoY(col);
+    	        req.setT(t); // Envia o tabuleiro atual para o servidor atualizar
+    	        
+    	        // 2. Envia para o servidor
+    	        ResponseProtocol response = client.request(req);
+    	        
+    	        // 3. Atualiza o tabuleiro local com a resposta do servidor
+    	        if (response.getStatus() == Status.OK) {
+    	            this.t = response.getTabuleiro(); // O servidor devolve o tabuleiro com a peça add
+    	            updateChessBoard();
+    	            controller = true;
+    	        } else {
+    	            JOptionPane.showMessageDialog(null, "Erro do Servidor: " + response.getMensagem());
+    	        }
+    	    } else {
+    	        JOptionPane.showMessageDialog(null, "Escolha uma peça no menu!", "ERRO", JOptionPane.ERROR_MESSAGE);
+    	    }
+    	}
+    	else { // MOVIMENTANDO UMA PEÇA EXISTENTE
+    	    if (!canMakeMovement) {
+    	        // Seleção da peça (local, apenas visual)
+    	        this.p = t.getMatrizPosicao(row, col);
+    	        if (this.p == null)
+    	            JOptionPane.showMessageDialog(null, "Selecione uma peça!", "ERRO", JOptionPane.ERROR_MESSAGE);
+    	        else 
+    	            canMakeMovement = true; // Agora espera o clique do destino
+    	    } 
+    	    else if (canMakeMovement) {
+    	        // O usuário clicou no destino (row, col)
+    	        
+    	        // 1. Prepara a requisição de movimento
+    	        RequestProtocol req = new RequestProtocol();
+    	        req.setTipo(Tipo.RMOV_PECA);
+    	        req.setPosX(p.getPosicaoAtualX()); // Onde a peça está agora
+    	        req.setPosY(p.getPosicaoAtualY());
+    	        req.setDestinoX(row);              // Para onde ela vai
+    	        req.setDestinoY(col);
+    	        req.setT(t);                       // Manda o tabuleiro
+    	        
+    	        // 2. Envia e aguarda validação
+    	        ResponseProtocol response = client.request(req);
+    	        
+    	        // 3. Processa a resposta
+    	        if (response.getStatus() == Status.OK) {
+    	            this.t = response.getTabuleiro(); // Atualiza com o tabuleiro movido
+    	            updateChessBoard();
+    	        } else {
+    	            JOptionPane.showMessageDialog(null, "Movimento Inválido ou Bloqueado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+    	        }
+    	        canMakeMovement = false;
+    	    }
     	}
     }
     
@@ -520,5 +563,6 @@ public class ModoSimulacao extends javax.swing.JFrame {
     private javax.swing.JPanel Tabuleiro;
     private javax.swing.JLabel Torre;
     private javax.swing.JButton jButton1;
+    private final Client client = new Client("localhost", 8089);
     // End of variables declaration//GEN-END:variables
 }

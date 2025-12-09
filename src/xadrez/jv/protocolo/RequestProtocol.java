@@ -1,4 +1,4 @@
-package xadrez.jv.servidor;
+package xadrez.jv.protocolo;
 
 import com.google.gson.annotations.Expose;
 import xadrez.jv.backend.Tabuleiro;
