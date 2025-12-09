@@ -367,19 +367,19 @@ public class ModoSimulacao extends javax.swing.JFrame {
     	ImageIcon chessIcon;
     	String path;
     	if (p instanceof Bispo) {
-    		path = (p.getCor() == "Branco") ? "/Chess_img/BispoBranco.png" : "/Chess_img/BispoPreto.png";
+    		path = (p.getCor().equals("Branco")) ? "/Chess_img/BispoBranco.png" : "/Chess_img/BispoPreto.png";
 	    	originalIcon = new ImageIcon(getClass().getResource(path));  
 	        originalImage = originalIcon.getImage();
 	        scaledImage = originalImage.getScaledInstance(70, 80, Image.SCALE_SMOOTH);  
 	        chessIcon = new ImageIcon(scaledImage);
     	}else if (p instanceof Cavalo) {
-    		path = (p.getCor() == "Branco") ? "/Chess_img/CavaloBranco.png" : "/Chess_img/CavaloPreto.png";
+    		path = (p.getCor().equals("Branco")) ? "/Chess_img/CavaloBranco.png" : "/Chess_img/CavaloPreto.png";
     		originalIcon = new ImageIcon(getClass().getResource(path)); 
             originalImage = originalIcon.getImage();
             scaledImage = originalImage.getScaledInstance(70, 80, Image.SCALE_SMOOTH);  
             chessIcon = new ImageIcon(scaledImage);
     	}else {
-    		path = (p.getCor() == "Branco") ? "/Chess_img/TorreBranca.png" : "/Chess_img/TorrePreta.png";
+    		path = (p.getCor().equals("Branco")) ? "/Chess_img/TorreBranca.png" : "/Chess_img/TorrePreta.png";
     		originalIcon = new ImageIcon(getClass().getResource(path)); 
             originalImage = originalIcon.getImage();
             scaledImage = originalImage.getScaledInstance(70, 80, Image.SCALE_SMOOTH);  
