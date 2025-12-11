@@ -368,6 +368,12 @@ O TCP natural suporta esse fluxo sem overhead desnecessário.
 
 Este protocolo sobre TCP provou ser ideal para o Xadrez Educacional, equilibrando confiabilidade necessária para o contexto educativo com simplicidade de implementação.
 
+### 2.5 Diagrama de Sequência
+
+Abaixo está o diagrama de sequência consolidado do sistema (Cliente ↔ Servidor), cobrindo os fluxos de Explicação, Adição e Movimentação de peças:
+
+![Diagrama de Sequência](diagramaSequencia.png)
+
 ## 3 Requisitos Mínimos de Funcionamento
 
 Para garantir a execução correta do software (Cliente e Servidor), o ambiente deve atender aos seguintes requisitos:
@@ -386,3 +392,10 @@ Para garantir a execução correta do software (Cliente e Servidor), o ambiente 
 ### 3.3 Configuração de Rede
 * **Porta:** A porta **8089** (TCP) deve estar liberada no Firewall da máquina onde o Servidor será executado.
 * **Conectividade:** As máquinas (Cliente e Servidor) devem estar conectadas à mesma rede local (LAN) ou acessíveis via VPN/IP Público.
+## 4. Autores
+
+Este projeto foi desenvolvido pelos seguintes alunos:
+
+* **Arthur Moreira**
+* **Breno Arouca**
+* **Emyle Silva**
