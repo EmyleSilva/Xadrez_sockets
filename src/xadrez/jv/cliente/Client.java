@@ -1,5 +1,7 @@
 package xadrez.jv.cliente;
 
+import java.net.InetSocketAddress;
+
 import xadrez.jv.backend.Peca;
 import xadrez.jv.protocolo.PecaAdapter;
 import xadrez.jv.protocolo.RequestProtocol;
@@ -24,20 +26,29 @@ public class Client {
         this.port = port;
     }
 
-    public ResponseProtocol request(RequestProtocol request){
-        try(Socket socket = new Socket(this.host, this.port);
+    public ResponseProtocol request(RequestProtocol request) {
+        // Cria o socket vazio
+        Socket socket = new Socket();
+        try {
+            // Tenta conectar com um limite de 2000 milissegundos (2 segundos)
+            socket.connect(new InetSocketAddress(this.host, this.port), 2000);
+            
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String jsonReq = gson.toJson(request);
-            // System.out.println("\n\n\n >>> Enviando requisição: " + jsonReq + "\n\n");
             out.println(jsonReq);
 
             String jsonResp = in.readLine();
-            // System.out.println("\n\n\n >>> Resposta recebida: " + jsonResp + "\n\n");
+            
+            socket.close();
+            
             return gson.fromJson(jsonResp, ResponseProtocol.class);
+            
         } catch (Exception e) {
-            e.printStackTrace();
+            // Se der erro ou timeout, cai aqui
+            // e.printStackTrace();
+            try { socket.close(); } catch (Exception ex) {} // Garante fechamento
             return null;
         }
     }

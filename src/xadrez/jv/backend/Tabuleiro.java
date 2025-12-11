@@ -50,11 +50,11 @@ public class Tabuleiro {
 			return true;
 		
 		Peca pecaDestino = this.matrizPosicao[destinoX][destinoY];
-		if (pecaDestino.cor == peca.cor)
+		if (pecaDestino.getCor().equals(peca.getCor()))
 			return false;
 		
 		pecaDestino.mudarEstado();
-		if (pecaDestino.cor == "Branco") this.capturadasBrancas.add(pecaDestino);
+		if (pecaDestino.getCor().equals("Branco")) this.capturadasBrancas.add(pecaDestino);
 		else this.capturadasPretas.add(pecaDestino);
 		return true;
 	}

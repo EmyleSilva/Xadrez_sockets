@@ -285,7 +285,7 @@ public class ModoSimulacao extends javax.swing.JFrame {
     	    if (this.p != null) {
     	        // 1. Prepara a requisição
     	        RequestProtocol req = new RequestProtocol();
-    	        req.setTipo(Tipo.GET_PECA); // Sugestão: Renomeiem para ADICIONAR_PECA no Enum
+    	        req.setTipo(Tipo.GET_PECA);
     	        
     	        // Mapeia o nome da peça baseada na instância local (gambiarra necessária pois p é abstrato)
     	        if(p instanceof Bispo) req.setPeca("BISPO");
@@ -299,6 +299,14 @@ public class ModoSimulacao extends javax.swing.JFrame {
     	        
     	        // 2. Envia para o servidor
     	        ResponseProtocol response = client.request(req);
+    	        
+    	        if (response == null) {
+    	            JOptionPane.showMessageDialog(null, 
+    	                "Não foi possível conectar ao Servidor.\nVerifique se ele está ligado e se o IP está correto.", 
+    	                "Erro de Conexão", 
+    	                JOptionPane.ERROR_MESSAGE);
+    	            return; // Cancela a operação
+    	        }
     	        
     	        // 3. Atualiza o tabuleiro local com a resposta do servidor
     	        if (response.getStatus() == Status.OK) {
