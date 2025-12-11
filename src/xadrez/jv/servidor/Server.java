@@ -75,6 +75,12 @@ public class Server {
 		ResponseProtocol response = new ResponseProtocol();
 
 		Tipo tipo = request.getTipo();
+		
+		if (request == null || request.getTipo() == null) {
+	        response.setStatus(Status.INVALIDO);
+	        response.setMensagem("Requisição vazia ou sem tipo definido.");
+	        return response;
+	    }
 
 		if (tipo == Tipo.GET_EXP) {
 			response = processGetExp(request, response);
@@ -83,7 +89,8 @@ public class Server {
 		} else if (tipo == Tipo.RMOV_PECA) {
 			response = processRMovPeca(request, response);
 		} else {
-			// TODO: Tratar requisições incorretas?
+			response.setStatus(Status.INVALIDO);
+	        response.setMensagem("Tipo de requisição desconhecido: " + tipo);
 		}
 
 		return response;
