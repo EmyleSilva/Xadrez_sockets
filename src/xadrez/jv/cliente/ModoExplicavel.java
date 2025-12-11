@@ -410,6 +410,15 @@ public class ModoExplicavel extends javax.swing.JFrame {
         req.setTipo(Tipo.GET_EXP);
         req.setPeca(nome_peca);
         ResponseProtocol response = client.request(req);
+        
+        if (response == null) {
+            JOptionPane.showMessageDialog(this, 
+                "Não foi possível conectar ao Servidor.\nVerifique se o IP está correto.", 
+                "Erro de Conexão", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String mensagem = (response.getMensagem() != null) ? response.getMensagem() : "Erro ao buscar explicação da peça desejada!!";
         JScrollPane scrollPane = personalizeMessage(mensagem);
         scrollPane.setPreferredSize(new java.awt.Dimension(350, 150));
