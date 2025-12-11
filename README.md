@@ -367,3 +367,22 @@ O TCP natural suporta esse fluxo sem overhead desnecessário.
 - **Implementação simples:** TCP requer menos código de confiabilidade
 
 Este protocolo sobre TCP provou ser ideal para o Xadrez Educacional, equilibrando confiabilidade necessária para o contexto educativo com simplicidade de implementação.
+
+## 3 Requisitos Mínimos de Funcionamento
+
+Para garantir a execução correta do software (Cliente e Servidor), o ambiente deve atender aos seguintes requisitos:
+
+### 3.1 Software
+* **Sistema Operacional:** Windows 10/11, Linux (qualquer distribuição com suporte a Java) ou macOS.
+* **Java:** JDK 17 ou superior instalado e configurado no PATH do sistema.
+* **Gerenciador de Dependências:** Maven (caso vá compilar o projeto a partir do código fonte).
+
+### 3.2 Hardware
+* **Processador:** Intel Core i3 / AMD Ryzen 3 ou superior (dual-core).
+* **Memória RAM:** Mínimo de 2GB (recomendado 4GB para execução fluida da JVM).
+* **Armazenamento:** 50 MB de espaço livre em disco.
+* **Rede:** Adaptador de rede (Wi-Fi ou Ethernet) funcional.
+
+### 3.3 Configuração de Rede
+* **Porta:** A porta **8089** (TCP) deve estar liberada no Firewall da máquina onde o Servidor será executado.
+* **Conectividade:** As máquinas (Cliente e Servidor) devem estar conectadas à mesma rede local (LAN) ou acessíveis via VPN/IP Público.
